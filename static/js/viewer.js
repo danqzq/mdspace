@@ -17,6 +17,7 @@ let markdownId = '';
 let isOwner = false;
 let selectedLine = null;
 let comments = [];
+let rawContent = '';
 
 // DOM Elements
 const loadingState = document.getElementById('loading-state');
@@ -27,6 +28,7 @@ const viewCount = document.getElementById('view-count');
 const expiresAt = document.getElementById('expires-at');
 const deleteBtn = document.getElementById('delete-btn');
 const copyLinkBtn = document.getElementById('copy-link-btn');
+const downloadBtn = document.getElementById('download-btn');
 const commentsList = document.getElementById('comments-list');
 const commentCount = document.getElementById('comment-count');
 const commentForm = document.getElementById('comment-form');
@@ -54,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Set up event listeners
 function setupEventListeners() {
     copyLinkBtn.addEventListener('click', copyCurrentLink);
+    downloadBtn.addEventListener('click', downloadMarkdown);
     deleteBtn.addEventListener('click', deleteMarkdown);
     submitCommentBtn.addEventListener('click', submitComment);
     cancelCommentBtn.addEventListener('click', cancelComment);
@@ -85,6 +88,9 @@ async function loadMarkdown() {
         if (isOwner) {
             deleteBtn.classList.remove('hidden');
         }
+
+        // Store raw content for download
+        rawContent = data.content;
 
         renderMarkdownWithLines(data.content);
 
@@ -349,6 +355,28 @@ async function copyCurrentLink() {
     } catch (error) {
         showToast('Failed to copy link', 'error');
     }
+}
+
+function downloadMarkdown() {
+    if (!rawContent) {
+        showToast('No content to download', 'error');
+        return;
+    }
+
+    const firstLine = rawContent.split('\n')[0].replace(/^#*\s*/, '').trim();
+    const filename = (firstLine.substring(0, 50).replace(/[^a-z0-9]/gi, '_') || 'markdown') + '.md';
+
+    const blob = new Blob([rawContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast('Download started!', 'success');
 }
 
 function showNotFound() {
