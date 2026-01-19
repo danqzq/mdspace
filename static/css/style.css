@@ -832,6 +832,20 @@ body {
     background: var(--color-text-muted);
 }
 
+/* GitHub Link */
+.github-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+    padding: var(--spacing-xs);
+}
+
+.github-link:hover {
+    color: var(--color-text-primary);
+}
+
 /* Mobile View Optimizations */
 @media (max-width: 768px) {
     .header {
