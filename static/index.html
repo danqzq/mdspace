@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mdspace - Share Markdown Instantly</title>
+    <meta name="description"
+        content="Quickly share markdown files with instant preview, line comments, and temporary links. No signup required.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', var(--font-sans);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span>mdspace</span>
+            </a>
+            <div class="user-stats">
+                <span class="stats-badge" id="user-stats">
+                    <span id="files-count">0</span> / <span id="files-limit">10</span> files
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="upload-section">
+            <div class="upload-panel">
+                <h2>Drop a file</h2>
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-zone-icon"></div>
+                    <p>Drop your .md file here</p>
+                    <small>or click to browse</small>
+                </div>
+                <input type="file" id="file-input" accept=".md,.markdown,text/markdown" hidden>
+            </div>
+
+            <div class="upload-panel">
+                <h2>Paste markdown</h2>
+                <textarea class="markdown-input" id="markdown-input" placeholder="# Hello World
+
+Paste your markdown here...
+
+- Supports **bold** and *italic*
+- Code blocks with syntax highlighting
+- Tables, lists, and more!"></textarea>
+            </div>
+        </section>
+
+        <section class="preview-section" id="preview-section">
+            <div class="preview-header">
+                <h2>Preview</h2>
+                <button class="btn btn-secondary" id="clear-btn">Clear</button>
+            </div>
+            <div class="preview-content" id="preview-content">
+                <div class="preview-placeholder">
+                    Your markdown preview will appear here...
+                </div>
+            </div>
+        </section>
+
+        <div class="actions">
+            <button class="btn btn-primary btn-lg" id="share-btn" disabled>
+                <span>Create Share Link</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- Share Success Modal -->
+    <div class="modal-overlay" id="share-modal">
+        <div class="modal">
+            <h2>Link Created!</h2>
+            <p>Your markdown is now shareable. The link will expire in 24 hours.</p>
+            <div class="share-link-container">
+                <input type="text" class="share-link-input" id="share-link" readonly>
+                <button class="btn btn-primary" id="copy-btn">Copy</button>
+            </div>
+            <p class="expires-info" id="expires-info"></p>
+            <div class="actions">
+                <button class="btn btn-secondary" id="view-btn">View Page</button>
+                <button class="btn btn-secondary" id="close-modal-btn">Create Another</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

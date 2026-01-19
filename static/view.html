@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Markdown - mdspace</title>
+    <meta name="description" content="View shared markdown content on mdspace">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', var(--font-sans);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span>mdspace</span>
+            </a>
+            <div class="view-actions">
+                <button class="btn btn-secondary" id="copy-link-btn">Copy Link</button>
+                <button class="btn btn-danger hidden" id="delete-btn">Delete</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Loading State -->
+        <div id="loading-state" class="preview-placeholder" style="text-align: center; padding: 48px;">
+            <div class="spinner" style="margin: 0 auto 16px;"></div>
+            <p>Loading markdown...</p>
+        </div>
+
+        <!-- Not Found State -->
+        <div id="not-found-state" class="not-found hidden">
+            <h1>404</h1>
+            <p>This markdown doesn't exist or has expired.</p>
+            <a href="/" class="btn btn-primary">Create New</a>
+        </div>
+
+        <!-- Content State -->
+        <div id="content-state" class="hidden">
+            <div class="view-header">
+                <div class="view-meta">
+                    <div class="view-meta-item">
+                        <span class="view-icon">Views:</span>
+                        <span id="view-count">0</span> views
+                    </div>
+                    <div class="view-meta-item">
+                        <span class="view-icon">Expires:</span>
+                        Expires <span id="expires-at"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-layout">
+                <div class="upload-panel">
+                    <div class="markdown-body" id="markdown-content"></div>
+                </div>
+
+                <div class="comments-panel">
+                    <div class="comments-header">
+                        <h3>Comments</h3>
+                        <span class="comment-count" id="comment-count">0</span>
+                    </div>
+
+                    <div class="comments-list" id="comments-list">
+                        <div class="comments-empty">
+                            Click on a line number to add a comment
+                        </div>
+                    </div>
+
+                    <div class="comment-form hidden" id="comment-form">
+                        <div class="comment-form-header">
+                            Comment on line <span id="comment-line-num"></span>
+                        </div>
+                        <input type="text" class="author-input" id="comment-author" placeholder="Your name (optional)">
+                        <textarea class="comment-input" id="comment-text"
+                            placeholder="Write your comment..."></textarea>
+                        <div class="actions" style="justify-content: flex-start;">
+                            <button class="btn btn-primary" id="submit-comment-btn">Submit</button>
+                            <button class="btn btn-secondary" id="cancel-comment-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="/js/viewer.js"></script>
+</body>
+
+</html>
